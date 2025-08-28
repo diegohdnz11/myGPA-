@@ -1,66 +1,59 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyGpa());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyGpa extends StatelessWidget {
+  const MyGpa({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      home: Scaffold(
+    appBar: AppBar(
+    leading: Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: IconButton(onPressed: (){}, icon: const Icon(Icons.arrow_back_ios_new_rounded),iconSize: 36,),
+    ),
+    title: const Text('Calculadora de Notas',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: IconButton(onPressed: (){}, icon: const Icon(Icons.add),iconSize: 40,),
+        )
+      ]
+    ),body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+           Text(
+          "vacio",style: TextStyle(fontWeight: FontWeight.w200),),
+          const SizedBox(height: 250,),
+          Row(
+            children: [
+              Expanded(child: ElevatedButton.icon(onPressed: (){}, label: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Calificacion'),
+                  Text('GPA '),
+
+                ],
+              ), icon: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children:[
+                  Icon(Icons.calculate_rounded),
+                  Icon(Icons.calculate_rounded),
+                ]
+              ))),
+              const SizedBox(height: 100,),
+            ],
+          ),
+
+
+
+          ]
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+    )
     );
   }
 }
