@@ -35,21 +35,23 @@ class _GpaPageState extends State<GpaPage> {
         ),
         body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children:[
               Row(
                   children: [
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
+                            height: 80,
                             decoration: BoxDecoration(
-                              color: Colors.green,
+                              color: Colors.green[800],
                               border: Border.all(color: Colors.green),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child:Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children:[
-                                Text('General',style: TextStyle(color: Colors.white),),
+                                Text('General',style: TextStyle(color: Colors.white,fontSize: 16),),
                                 SizedBox(height: 10,),
                                 Text('0.00',style: TextStyle(color: Colors.white),),
                               ]
@@ -61,14 +63,16 @@ class _GpaPageState extends State<GpaPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
+                          height: 80,
                             decoration: BoxDecoration(
-                              color: Colors.green,
+                              color: Colors.green[800],
                               border: Border.all(color: Colors.green),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child:Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children:[
-                                  Text('Concentracion',style: TextStyle(color: Colors.white)),
+                                  Text('Concentracion',style: TextStyle(color: Colors.white,fontSize: 16)),
                                   SizedBox(height: 10,),
                                   Text('0.00',style: TextStyle(color: Colors.white)),
                                 ]
@@ -80,19 +84,46 @@ class _GpaPageState extends State<GpaPage> {
                   ],
 
               ),
-
-              ElevatedButton(onPressed: (){}, child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Row(
                   children: [
-                    Icon(Icons.add),
-                    Icon(Icons.add),
-                    Icon(Icons.add),
-                    Icon(Icons.add),
-
-                  ]
-              ))
-
-
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(60, 60),
+                          backgroundColor: Colors.green[500],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(40),
+                              bottomLeft: Radius.circular(40),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()),);},
+                        child: Icon(Icons.home,color: Colors.white),
+                      ),
+                    ),
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(60, 60),
+                          backgroundColor: Colors.green[500],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(40),
+                              bottomRight: Radius.circular(40),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => GpaPage()),);},
+                        child: Icon(Icons.menu_book,color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ]
         ),
 

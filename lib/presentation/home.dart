@@ -31,30 +31,49 @@ class _HomePageState extends State<HomePage> {
             ]
         ),
           body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
 
-                Center(
-
-                      child: ElevatedButton.icon(onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => GpaPage()));
-                      }, label: Icon(Icons.school_outlined))
-
-                ),
-
-
-              ElevatedButton(onPressed: (){}, child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Row(
                 children: [
-                  Icon(Icons.add),
-                  Icon(Icons.add),
-                  Icon(Icons.add),
-                  Icon(Icons.add),
-
-                ]
-              ))
-
-
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(60, 60),
+                        backgroundColor: Colors.green[500],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(40),
+                            bottomLeft: Radius.circular(40),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()),);},
+                      child: Icon(Icons.home,color: Colors.white),
+                    ),
+                  ),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(60, 60),
+                        backgroundColor: Colors.green[500],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(40),
+                            bottomRight: Radius.circular(40),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => GpaPage()),);},
+                      child: Icon(Icons.menu_book,color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ]
         ),
 
