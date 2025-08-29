@@ -9,6 +9,8 @@ class MyGpa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomePage();
+    return MaterialApp(
+      home: HomePage(),
+    );
   }
 }
