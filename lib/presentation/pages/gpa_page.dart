@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:classic_gpa/presentation/home.dart';
+import 'package:classic_gpa/presentation/pages/home.dart';
 
 
 
@@ -22,9 +22,13 @@ class _GpaPageState extends State<GpaPage> {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
               }, icon: const Icon(Icons.arrow_back_ios_new_rounded),iconSize: 36,),
             ),
-            title: Padding(
-              padding: const EdgeInsets.only(right: 40.0),
-              child: const Text('Calculadora de GPA',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+
+            titleSpacing: 0.0,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const [
+                Text('Calculadora de Notas',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+              ],
             ),
             actions: [
               Padding(
@@ -40,10 +44,18 @@ class _GpaPageState extends State<GpaPage> {
                   children: [
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.fromLTRB(18, 18, 10, 12),
                           child: Container(
                             height: 80,
-                            decoration: BoxDecoration(
+                            decoration: BoxDecoration( 
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.6),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
                               color: Colors.green[800],
                               border: Border.all(color: Colors.green),
                               borderRadius: BorderRadius.circular(10),
@@ -61,10 +73,18 @@ class _GpaPageState extends State<GpaPage> {
                       ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.fromLTRB(10, 18, 18, 12),
                         child: Container(
                           height: 80,
                             decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.6),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
                               color: Colors.green[800],
                               border: Border.all(color: Colors.green),
                               borderRadius: BorderRadius.circular(10),
@@ -92,7 +112,7 @@ class _GpaPageState extends State<GpaPage> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: Size(60, 60),
-                          backgroundColor: Colors.green[500],
+                          backgroundColor: Colors.green[800],
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(40),
@@ -101,14 +121,19 @@ class _GpaPageState extends State<GpaPage> {
                           ),
                         ),
                         onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()),);},
-                        child: Icon(Icons.home,color: Colors.white),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(Icons.calculate_outlined,color: Colors.white),
+                          ],
+                        ),
                       ),
                     ),
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: Size(60, 60),
-                          backgroundColor: Colors.green[500],
+                          backgroundColor: Colors.green[800],
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(40),
@@ -116,9 +141,14 @@ class _GpaPageState extends State<GpaPage> {
                             ),
                           ),
                         ),
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => GpaPage()),);},
-                        child: Icon(Icons.menu_book,color: Colors.white),
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(Icons.book_outlined,color: Colors.white),
+                            Text("GPA",style: TextStyle(color: Colors.white,fontSize: 16),)
+                          ],
+                        ),
                       ),
                     ),
                   ],
