@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:classic_gpa/presentation/pages/home.dart';
-import 'package:classic_gpa/presentation/pages/gpa_plus.dart'; // Import the new widget
+import 'package:classic_gpa/presentation/pages/Home/home.dart';
+import 'package:classic_gpa/presentation/pages/GPA/gpa_plus.dart';
+import 'package:classic_gpa/presentation/pages/Home/home_card.dart';
 
-class GpaPage extends StatefulWidget {
-  const GpaPage({super.key});
+
+
+class HomeInsights extends StatefulWidget {
+  final String pageTitle;
+  const HomeInsights({super.key, required this.pageTitle});
 
   @override
-  State<GpaPage> createState() => _GpaPageState();
+  State<HomeInsights> createState() => _HomeInsightsState();
 }
 
-class _GpaPageState extends State<GpaPage> {
-  int _gpaPlusWidgetCount = 0;
+class _HomeInsightsState extends State<HomeInsights> {
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +33,10 @@ class _GpaPageState extends State<GpaPage> {
             titleSpacing: 0.0,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
-                  'Calculadora de Notas',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  widget.pageTitle, // Use widget.pageTitle here
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                 ),
               ],
             ),
@@ -42,9 +45,6 @@ class _GpaPageState extends State<GpaPage> {
                 padding: const EdgeInsets.only(right: 10),
                 child: IconButton(
                   onPressed: () {
-                    setState(() {
-                      _gpaPlusWidgetCount++;
-                    });
                   },
                   icon: const Icon(Icons.add),
                   iconSize: 40,
@@ -73,11 +73,11 @@ class _GpaPageState extends State<GpaPage> {
                           border: Border.all(color: Colors.green),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Column( 
+                        child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [ 
+                            children: [
                               Text(
-                                'General',
+                                'Nota actual:',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),
@@ -85,7 +85,7 @@ class _GpaPageState extends State<GpaPage> {
                                 height: 10,
                               ),
                               Text(
-                                '0.00',
+                                '--%',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ])),
@@ -102,37 +102,38 @@ class _GpaPageState extends State<GpaPage> {
                               color: Colors.grey.withOpacity(0.6),
                               spreadRadius: 5,
                               blurRadius: 7,
-                              offset: const Offset(0, 3), 
+                              offset: const Offset(0, 3),
                             ),
                           ],
                           color: Colors.green[800],
                           border: Border.all(color: Colors.green),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Column( 
+                        child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [ 
-                              Text('Concentracion',
+                            children: [
+                              Text('Nota objetivo',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 16)),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text('0.00',
+                              Text('100.0%',
                                   style: TextStyle(color: Colors.white)),
                             ])),
                   ),
                 ),
               ]),
 
-              Expanded(
+              /*Expanded(
                 child: ListView.builder(
-                  itemCount: _gpaPlusWidgetCount,
-                  itemBuilder: (context, index) {
-                    return const GpaPlusWidget(); 
+                  // itemCount: _gpaPlusWidgetCount, // This variable is not defined here
+                  itemBuilder: (context, i) {
+                    // return GpaPlusWidget(yearNumber: i + 1); // GpaPlusWidget is not defined here
+                    return Text("Placeholder for GpaPlusWidget"); // Placeholder
                   },
                 ),
-              ),
+              ),*/
 
               Padding(
                 padding: const EdgeInsets.all(30.0),
@@ -150,12 +151,12 @@ class _GpaPageState extends State<GpaPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const HomePage())); 
+                                    builder: (context) =>  HomePage()));
                           },
-                          child: const SizedBox.expand( 
-                            child: Row( 
+                          child: const SizedBox.expand(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [ 
+                              children: [
                                 Icon(Icons.calculate_outlined,
                                     color: Colors.white),
                               ],
@@ -169,7 +170,7 @@ class _GpaPageState extends State<GpaPage> {
                           child: SizedBox.expand(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [ 
+                              children: const [
                                 Icon(Icons.book_outlined, color: Colors.white),
                                 SizedBox(width: 8),
                                 Text("GPA",

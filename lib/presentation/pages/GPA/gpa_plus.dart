@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class GpaPlusWidget extends StatelessWidget {
-  const GpaPlusWidget({super.key});
+  final int yearNumber;
+
+  const GpaPlusWidget({super.key, required this.yearNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +22,11 @@ class GpaPlusWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(15, 23, 10, 10),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 23, 10, 10),
                   child: Text(
-                  'Año 1',
-                  style: TextStyle(fontSize: 24, color: Colors.black,fontWeight: FontWeight.bold),
+                  'Año $yearNumber',
+                  style: const TextStyle(fontSize: 24, color: Colors.black,fontWeight: FontWeight.bold),
                   ),
                 ),
                 Column(
