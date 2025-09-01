@@ -43,53 +43,48 @@ class _HomePageState extends State<HomePage> {
             Text("vacio",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w200),),
             Padding(
               padding: const EdgeInsets.all(30.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(60, 60),
-                        backgroundColor: Colors.green[800],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(40),
-                            bottomLeft: Radius.circular(40),
+              child: Container(
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Colors.green[800],
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                        },
+                        child: SizedBox.expand(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.calculate_outlined, color: Colors.white),
+                              SizedBox(width: 8),
+                              Text("Calificación", style: TextStyle(color: Colors.white, fontSize: 16)),
+                            ],
                           ),
                         ),
                       ),
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(Icons.calculate_outlined,color: Colors.white),
-                          Text("Calificacion",style: TextStyle(color: Colors.white,fontSize: 16),)
-                        ],
-                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(60, 60),
-                        backgroundColor: Colors.green[800],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(40),
-                            bottomRight: Radius.circular(40),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => GpaPage()));
+
+                        },
+                        child: SizedBox.expand(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children:  [
+                              Icon(Icons.book_outlined, color: Colors.white),
+                            ],
                           ),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => GpaPage()),);},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(Icons.book_outlined,color: Colors.white),
-                        ],
-                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ]
