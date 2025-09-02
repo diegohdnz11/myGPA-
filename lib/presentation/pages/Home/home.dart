@@ -1,5 +1,5 @@
 import 'package:classic_gpa/presentation/pages/GPA/gpa_page.dart';
-import 'package:classic_gpa/presentation/pages/Home/home_card.dart'; // Import HomeCard
+import 'package:classic_gpa/presentation/widgets/home_card.dart'; // Import HomeCard
 import 'package:flutter/material.dart';
 import 'package:classic_gpa/presentation/pages/Home/home_plus.dart';
 
@@ -15,11 +15,9 @@ class _HomePageState extends State<HomePage> {
 
   void _addCourse() async {
     final newCourseName = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const HomePlus()),
-    );
+      context, MaterialPageRoute(builder: (context) => const HomePlus()),);
 
-    if (newCourseName != null && newCourseName.toString().isNotEmpty) {
+    if(newCourseName != null && newCourseName.toString().isNotEmpty) {
       setState(() {
         courses.add(newCourseName.toString());
       });
@@ -53,7 +51,7 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.only(right: 10),
                 child: IconButton(
-                  onPressed: _addCourse, // Call _addCourse method
+                  onPressed: _addCourse,
                   icon: const Icon(Icons.add),
                   iconSize: 40,
                 ),
@@ -65,7 +63,6 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: courses.isEmpty
                     ? const Center(
-                        // Display "vacio" if no courses
                         child: Text(
                           "vacio",
                           style: TextStyle(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:classic_gpa/presentation/pages/Home/home.dart';
-import 'package:classic_gpa/presentation/pages/GPA/gpa_plus.dart';
+import 'package:classic_gpa/presentation/widgets/gpa_card.dart';
 
 class GpaPage extends StatefulWidget {
   const GpaPage({super.key});

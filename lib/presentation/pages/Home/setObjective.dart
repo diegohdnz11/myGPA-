@@ -1,20 +1,22 @@
-import 'package:classic_gpa/presentation/widgets/home_card.dart';
 import 'package:flutter/material.dart';
-import 'package:classic_gpa/presentation/pages/Home/home.dart';
+import 'package:classic_gpa/presentation/pages/Home/home_insights.dart';
 
-class HomePlus extends StatefulWidget {
-  const HomePlus({super.key});
+class ObjectivePage extends StatefulWidget {
+  const ObjectivePage({super.key});
 
   @override
-  State<HomePlus> createState() => _HomePlusState();
+  State<ObjectivePage> createState() => _ObjectivePageState();
 }
 
-class _HomePlusState extends State<HomePlus> {
-  final searchText = TextEditingController(); // Added controller
+class _ObjectivePageState extends State<ObjectivePage> {
+  final nameText = TextEditingController(); // Added controller
+  final percentText = TextEditingController(); // Added controller
+
 
   @override
   void dispose() {
-    searchText.dispose(); // Dispose controller
+    nameText.dispose(); // Dispose controller
+    percentText.dispose(); // Dispose controller
     super.dispose();
   }
 
@@ -37,7 +39,7 @@ class _HomePlusState extends State<HomePlus> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: const [
             Text(
-              'Añadir Curso',
+              'Añadir',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
           ],
@@ -52,7 +54,7 @@ class _HomePlusState extends State<HomePlus> {
               child: Row(
                 children: [
                   Text(
-                    "Nombre del Curso",
+                    "Nombre",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
                   Text(
@@ -68,7 +70,7 @@ class _HomePlusState extends State<HomePlus> {
             Padding(
               padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
               child: TextField(
-                controller: searchText,
+                controller: nameText,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -77,11 +79,53 @@ class _HomePlusState extends State<HomePlus> {
                       width: 6.5,
                     ),
                   ),
-                  hintText: 'Introduzca el nombre',
+                  hintText: 'E.j: Examen Final',
                   contentPadding: EdgeInsets.all(10),
                   hintStyle: TextStyle(color: Colors.grey),
                 ),
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 50, top: 20),
+              child: Row(
+                children: [
+                  Text(
+                    "Peso",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                  ),
+                  Text(
+                    "*",
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
+              child: TextField(
+                controller: percentText,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                      width: 6.5,
+                    ),
+                  ),
+                  hintText: 'E.j: 25%',
+                  contentPadding: EdgeInsets.all(10),
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+                keyboardType: TextInputType.number, // Good for percentage input
+              ),
+            ),
+            SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.only(left: 50, top: 10),
+              child: Text("Peso Total : 0.0",style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(55, 15, 60, 55),
@@ -89,8 +133,12 @@ class _HomePlusState extends State<HomePlus> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      if(searchText.text.isNotEmpty) {
-                        Navigator.pop(context, searchText.text);
+                      if(nameText.text.isNotEmpty && percentText.text.isNotEmpty) {
+                        final homeworkData = {
+                          'name': nameText.text,
+                          'percent': percentText.text,
+                        };
+                        Navigator.pop(context, homeworkData);
                       }
                     },
                     child: Text(
