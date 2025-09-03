@@ -19,7 +19,6 @@ class _HomeInsightsState extends State<HomeInsights> {
       MaterialPageRoute(builder: (context) => const ObjectivePage()),
     );
 
-
     if (result != null) {
       setState(() {
         homeworkList.add(result);

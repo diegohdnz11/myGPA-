@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:classic_gpa/presentation/pages/Home/home.dart';
 import 'package:classic_gpa/presentation/widgets/gpa_card.dart';
 
 class GpaPage extends StatefulWidget {
@@ -12,6 +11,14 @@ class GpaPage extends StatefulWidget {
 class _GpaPageState extends State<GpaPage> {
   List<int> years = [];
   int nextYear = 1;
+  final ScrollController pageScroller = ScrollController();
+
+  void addCard() {
+    setState(() {
+      years.add(nextYear);
+      nextYear++;
+    });
+  }
 
   void deleteCard(int yearToDelete) {
     setState(() {
@@ -20,52 +27,63 @@ class _GpaPageState extends State<GpaPage> {
   }
 
   @override
+  void dispose() {
+    pageScroller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
-                },
-                icon: const Icon(Icons.arrow_back_ios_new_rounded),
-                iconSize: 36,
-              ),
-            ),
-            titleSpacing: 0.0,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  'Calculadora de Notas',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 10),
+    return Scaffold(
+      body: NestedScrollView(
+        controller: pageScroller,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 10),
                 child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      years.add(nextYear++);
-                    });
-                  },
-                  icon: const Icon(Icons.add),
-                  iconSize: 40,
+                  onPressed: () {},
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                  iconSize: 36,
                 ),
-              )
-            ]),
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(18, 18, 10, 12),
-                    child: Container(
+              ),
+              titleSpacing: 0.0,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const [
+                  Text(
+                    'GPA Calculator',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: IconButton(
+                    onPressed: addCard,
+                    icon: const Icon(Icons.add),
+                    iconSize: 40,
+                  ),
+                )
+              ],
+              floating: true,
+              snap: true,
+              pinned: false,
+            ),
+          ];
+        },
+        body: ListView.builder(
+          itemCount: years.length + 1,
+          itemBuilder: (context, i) {
+            if (i == 0) {
+              return Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(18, 18, 10, 12),
+                      child: Container(
                         height: 90,
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -80,28 +98,27 @@ class _GpaPageState extends State<GpaPage> {
                           border: Border.all(color: Colors.green),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Column( 
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [ 
-                              Text(
-                                'General',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 18),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                '0.00',
-                                style: TextStyle(color: Colors.white, fontSize: 16),
-                              ),
-                            ])),
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'General',
+                              style: TextStyle(color: Colors.white, fontSize: 18),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              '0.00',
+                              style: TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 18, 18, 12),
-                    child: Container(
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 18, 18, 12),
+                      child: Container(
                         height: 90,
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -109,95 +126,45 @@ class _GpaPageState extends State<GpaPage> {
                               color: Colors.grey.withOpacity(0.6),
                               spreadRadius: 5,
                               blurRadius: 7,
-                              offset: const Offset(0, 3), 
+                              offset: const Offset(0, 3),
                             ),
                           ],
                           color: Colors.green[800],
                           border: Border.all(color: Colors.green),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Column( 
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [ 
-                              Text('Concentracion',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18)),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text('0.00',
-                                  style: TextStyle(color: Colors.white, fontSize: 16)),
-                            ])),
-                  ),
-                ),
-              ]),
-
-              Expanded(
-                child: ListView.builder(
-                  itemCount: years.length,
-                  itemBuilder: (context, i) {
-                    final int currentYear = years[i];
-                    return GpaPlusWidget(
-                      yearNumber: currentYear,
-                      onDelete: (int yearToDelete) {
-                        deleteCard(yearToDelete);
-                      },
-                    );
-                  },
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Container(
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.green[800],
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>  HomePage()));
-                          },
-                          child: const SizedBox.expand(
-                            child: Row( 
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [ 
-                                Icon(Icons.calculate_outlined,
-                                    color: Colors.white),
-                              ],
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Concentracion',
+                              style: TextStyle(color: Colors.white, fontSize: 18),
                             ),
-                          ),
+                            SizedBox(height: 10),
+                            Text(
+                              '0.00',
+                              style: TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                          ],
                         ),
                       ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {},
-                          child: SizedBox.expand(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [ 
-                                Icon(Icons.book_outlined, color: Colors.white),
-                                SizedBox(width: 8),
-                                Text("GPA",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 16)),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ]),
+                ],
+              );
+            }
+
+            final int currentYearIndex = i - 1; 
+            final int currentYear = years[currentYearIndex];
+            return GpaPlusWidget(
+              key: ValueKey(currentYear),
+              yearNumber: currentYear,
+              onDelete: (int yearToDelete) {
+                deleteCard(yearToDelete);
+              },
+            );
+          },
+        ),
       ),
     );
   }

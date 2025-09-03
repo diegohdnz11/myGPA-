@@ -1,6 +1,4 @@
-import 'package:classic_gpa/presentation/widgets/home_card.dart';
 import 'package:flutter/material.dart';
-import 'package:classic_gpa/presentation/pages/Home/home.dart';
 
 class HomePlus extends StatefulWidget {
   const HomePlus({super.key});
@@ -11,7 +9,8 @@ class HomePlus extends StatefulWidget {
 
 class _HomePlusState extends State<HomePlus> {
   final searchText = TextEditingController();
-  
+
+
 
   @override
   Widget build(BuildContext context) {

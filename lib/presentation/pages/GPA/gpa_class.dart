@@ -34,8 +34,8 @@ class _GpaClassState extends State<GpaClass> {
         color: CupertinoColors.systemBackground.resolveFrom(context),
         child: CupertinoPicker(
           itemExtent: 32.0,
-          onSelectedItemChanged: (int index) {
-            onChanged(items[index]);
+          onSelectedItemChanged: (int i) {
+            onChanged(items[i]);
           },
           scrollController: FixedExtentScrollController(
             initialItem: items.indexOf(selectedItem),

@@ -4,7 +4,7 @@ import 'package:classic_gpa/presentation/widgets/semester_card.dart';
 
 class GpaPlusWidget extends StatefulWidget {
   final int yearNumber;
-  final void Function(int yearNumber) onDelete; // Changed from VoidCallback
+  final void Function(int yearNumber) onDelete;
 
   const GpaPlusWidget({super.key, required this.yearNumber, required this.onDelete});
 
@@ -61,7 +61,7 @@ class _GpaPlusWidgetState extends State<GpaPlusWidget> {
                                 CupertinoActionSheetAction(
                                   isDestructiveAction: true,
                                   onPressed: () {
-                                    widget.onDelete(widget.yearNumber); // Pass yearNumber
+                                    widget.onDelete(widget.yearNumber);
                                     Navigator.pop(context);
                                   },
                                   child: const Text('Delete Card'),

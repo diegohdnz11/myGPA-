@@ -3,7 +3,7 @@ import 'package:classic_gpa/presentation/pages/Home/home_insights.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomeCard extends StatelessWidget {
+class HomeCard extends StatefulWidget {
   final String courseName;
   final VoidCallback onDelete;
 
@@ -14,6 +14,56 @@ class HomeCard extends StatelessWidget {
   });
 
   @override
+  State<HomeCard> createState() => _HomeCardState();
+}
+
+class _HomeCardState extends State<HomeCard> {
+  String normalPercent = "--%";
+  final TextEditingController text = TextEditingController();
+
+  Future<void> _showPercentageDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, 
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Enter Grade'),
+          content: TextField(
+            controller: text,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(hintText: "Enter number"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel', style: TextStyle(color: Colors.black54)),
+              onPressed: () {
+                Navigator.of(context).pop();
+                text.clear();
+              },
+            ),
+            TextButton(
+              child: const Text('OK',style: TextStyle(color: Colors.black54)),
+              onPressed: () {
+                setState(() {
+                  normalPercent = "${text.text}%";
+                });
+                Navigator.of(context).pop();
+                text.clear();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    text.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -22,7 +72,7 @@ class HomeCard extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => HomeInsights(pageTitle: courseName)));
+                  builder: (context) => HomeInsights(pageTitle: widget.courseName)));
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.grey[300],
@@ -42,7 +92,7 @@ class HomeCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          courseName,
+                          widget.courseName,
                           style: const TextStyle(
                               fontSize: 22,
                               color: Colors.black,
@@ -69,7 +119,7 @@ class HomeCard extends StatelessWidget {
                                 CupertinoActionSheetAction(
                                   isDestructiveAction: true,
                                   onPressed: () {
-                                    onDelete();
+                                    widget.onDelete();
                                     Navigator.pop(context);
                                   },
                                   child: const Text('Delete Card'),
@@ -99,15 +149,22 @@ class HomeCard extends StatelessWidget {
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(100),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(20.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
                           child: Column(
                             children: [
-                              Text(
-                                "--%",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
+                              ElevatedButton(
+                                onPressed: _showPercentageDialog,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.grey[200],
+                                  shape: const CircleBorder(),
+                                ),
+                                child: Text(
+                                  normalPercent,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
                             ],
