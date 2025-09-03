@@ -10,7 +10,14 @@ class GpaPage extends StatefulWidget {
 }
 
 class _GpaPageState extends State<GpaPage> {
-  int _gpaPlusWidgetCount = 0;
+  List<int> years = [];
+  int nextYear = 1;
+
+  void deleteCard(int yearToDelete) {
+    setState(() {
+      years.remove(yearToDelete);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +37,7 @@ class _GpaPageState extends State<GpaPage> {
             titleSpacing: 0.0,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   'Calculadora de Notas',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
@@ -43,7 +50,7 @@ class _GpaPageState extends State<GpaPage> {
                 child: IconButton(
                   onPressed: () {
                     setState(() {
-                      _gpaPlusWidgetCount++;
+                      years.add(nextYear++);
                     });
                   },
                   icon: const Icon(Icons.add),
@@ -59,7 +66,7 @@ class _GpaPageState extends State<GpaPage> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(18, 18, 10, 12),
                     child: Container(
-                        height: 80,
+                        height: 90,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -79,14 +86,14 @@ class _GpaPageState extends State<GpaPage> {
                               Text(
                                 'General',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 16),
+                                    color: Colors.white, fontSize: 18),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 '0.00',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.white, fontSize: 16),
                               ),
                             ])),
                   ),
@@ -95,7 +102,7 @@ class _GpaPageState extends State<GpaPage> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(10, 18, 18, 12),
                     child: Container(
-                        height: 80,
+                        height: 90,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -114,12 +121,12 @@ class _GpaPageState extends State<GpaPage> {
                             children: [ 
                               Text('Concentracion',
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 16)),
+                                      color: Colors.white, fontSize: 18)),
                               SizedBox(
                                 height: 10,
                               ),
                               Text('0.00',
-                                  style: TextStyle(color: Colors.white)),
+                                  style: TextStyle(color: Colors.white, fontSize: 16)),
                             ])),
                   ),
                 ),
@@ -127,9 +134,15 @@ class _GpaPageState extends State<GpaPage> {
 
               Expanded(
                 child: ListView.builder(
-                  itemCount: _gpaPlusWidgetCount,
+                  itemCount: years.length,
                   itemBuilder: (context, i) {
-                    return GpaPlusWidget(yearNumber: i + 1);
+                    final int currentYear = years[i];
+                    return GpaPlusWidget(
+                      yearNumber: currentYear,
+                      onDelete: (int yearToDelete) {
+                        deleteCard(yearToDelete);
+                      },
+                    );
                   },
                 ),
               ),

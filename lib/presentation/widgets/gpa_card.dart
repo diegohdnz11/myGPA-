@@ -1,17 +1,19 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:classic_gpa/presentation/widgets/semester_card.dart';
 
 class GpaPlusWidget extends StatefulWidget {
   final int yearNumber;
+  final void Function(int yearNumber) onDelete; // Changed from VoidCallback
 
-  const GpaPlusWidget({super.key, required this.yearNumber});
+  const GpaPlusWidget({super.key, required this.yearNumber, required this.onDelete});
 
   @override
   State<GpaPlusWidget> createState() => _GpaPlusWidgetState();
 }
 
 class _GpaPlusWidgetState extends State<GpaPlusWidget> {
-  bool _expanded = false; // <-- added
+  bool expanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +21,8 @@ class _GpaPlusWidgetState extends State<GpaPlusWidget> {
       padding: const EdgeInsets.all(16.0),
       child: AnimatedContainer(
         width: double.infinity,
-        height: _expanded ? 420 : 220,
-        duration:  Duration(milliseconds: 250),
+        height: expanded ? 420 : 220,
+        duration: const Duration(milliseconds: 100),
         curve: Curves.easeInOut,
         decoration: BoxDecoration(
           color: Colors.grey[350],
@@ -36,7 +38,7 @@ class _GpaPlusWidgetState extends State<GpaPlusWidget> {
                   padding: const EdgeInsets.fromLTRB(15, 23, 10, 10),
                   child: Text(
                     'Año ${widget.yearNumber}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 24,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -50,7 +52,30 @@ class _GpaPlusWidgetState extends State<GpaPlusWidget> {
                     Padding(
                       padding: const EdgeInsets.only(left: 45.0),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showCupertinoModalPopup<void>(
+                            context: context,
+                            builder: (BuildContext context) => CupertinoActionSheet(
+                              title: const Text('Options'),
+                              actions: [
+                                CupertinoActionSheetAction(
+                                  isDestructiveAction: true,
+                                  onPressed: () {
+                                    widget.onDelete(widget.yearNumber); // Pass yearNumber
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Delete Card'),
+                                ),
+                              ],
+                              cancelButton: CupertinoActionSheetAction(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                            ),
+                          );
+                        },
                         icon: const Icon(Icons.more_horiz_outlined),
                         iconSize: 30,
                         style: ButtonStyle(
@@ -59,7 +84,7 @@ class _GpaPlusWidgetState extends State<GpaPlusWidget> {
                       ),
                     ),
 
-                    if (!_expanded)
+                    if(!expanded)
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 30, 30),
                         child: Container(
@@ -99,11 +124,11 @@ class _GpaPlusWidgetState extends State<GpaPlusWidget> {
             ),
 
 
-            if (_expanded)
+            if (expanded)
               Positioned(
                 left: 16,
                 right: 16,
-                bottom: 60, // space for the arrow
+                bottom: 60,
                 child: Column(
                   children: [
                     SemesterCard(
@@ -117,16 +142,16 @@ class _GpaPlusWidgetState extends State<GpaPlusWidget> {
                     ),
                   ],
                 ),
-              ), // Comma added here
+              ),
             Align(
               alignment: Alignment.bottomCenter,
               child: IconButton(
                 onPressed: () {
-                  setState(() => _expanded = !_expanded); // <-- toggle
+                  setState(() => expanded = !expanded);
                 },
-                icon: AnimatedRotation( // nice arrow rotation (optional)
+                icon: AnimatedRotation(
                   duration: const Duration(milliseconds: 1),
-                  turns: _expanded ? 0.5 : 0.0,
+                  turns: expanded ? 0.5 : 0.0,
                   child: const Icon(
                     Icons.expand_more_outlined,
                     size: 45,

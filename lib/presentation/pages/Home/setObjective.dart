@@ -9,16 +9,10 @@ class ObjectivePage extends StatefulWidget {
 }
 
 class _ObjectivePageState extends State<ObjectivePage> {
-  final nameText = TextEditingController(); // Added controller
-  final percentText = TextEditingController(); // Added controller
+  final nameText = TextEditingController();
+  final percentText = TextEditingController();
 
 
-  @override
-  void dispose() {
-    nameText.dispose(); // Dispose controller
-    percentText.dispose(); // Dispose controller
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +113,6 @@ class _ObjectivePageState extends State<ObjectivePage> {
                   contentPadding: EdgeInsets.all(10),
                   hintStyle: TextStyle(color: Colors.grey),
                 ),
-                keyboardType: TextInputType.number, // Good for percentage input
               ),
             ),
             SizedBox(height: 20,),

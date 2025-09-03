@@ -1,5 +1,5 @@
 import 'package:classic_gpa/presentation/pages/GPA/gpa_page.dart';
-import 'package:classic_gpa/presentation/widgets/home_card.dart'; // Import HomeCard
+import 'package:classic_gpa/presentation/widgets/home_card.dart';
 import 'package:flutter/material.dart';
 import 'package:classic_gpa/presentation/pages/Home/home_plus.dart';
 
@@ -11,17 +11,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> courses = []; // List to hold course names
+  List<String> courses = [];
 
   void _addCourse() async {
-    final newCourseName = await Navigator.push(
+    final newCourse = await Navigator.push(
       context, MaterialPageRoute(builder: (context) => const HomePlus()),);
 
-    if(newCourseName != null && newCourseName.toString().isNotEmpty) {
+    if(newCourse != null && newCourse.toString().isNotEmpty) {
       setState(() {
-        courses.add(newCourseName.toString());
+        courses.add(newCourse.toString());
       });
     }
+  }
+
+  void _deleteCourse(String course) {
+    setState(() {
+      courses.remove(course);
+    });
   }
 
   @override
@@ -61,8 +67,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: courses.isEmpty
-                    ? const Center(
+                child: courses.isEmpty ?  Center(
                         child: Text(
                           "vacio",
                           style: TextStyle(
@@ -70,12 +75,15 @@ class _HomePageState extends State<HomePage> {
                         ),
                       )
                     : ListView.builder(
-                        // Display ListView if there are courses
                         padding: const EdgeInsets.all(8.0),
                         itemCount: courses.length,
-                        itemBuilder: (context, index) {
-                          return Center( // Center the HomeCard
-                            child: HomeCard(courseName: courses[index]),
+                        itemBuilder: (context, i) {
+                          final course = courses[i];
+                          return Center(
+                            child: HomeCard(
+                              courseName: course,
+                              onDelete: () => _deleteCourse(course),
+                            ),
                           );
                         },
                       ),

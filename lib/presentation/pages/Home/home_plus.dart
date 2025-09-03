@@ -10,13 +10,8 @@ class HomePlus extends StatefulWidget {
 }
 
 class _HomePlusState extends State<HomePlus> {
-  final searchText = TextEditingController(); // Added controller
-
-  @override
-  void dispose() {
-    searchText.dispose(); // Dispose controller
-    super.dispose();
-  }
+  final searchText = TextEditingController();
+  
 
   @override
   Widget build(BuildContext context) {
