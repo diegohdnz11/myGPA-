@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:classic_gpa/presentation/pages/Home/home_insights.dart';
 
 class ObjectivePage extends StatefulWidget {
   const ObjectivePage({super.key});
@@ -126,13 +125,6 @@ class _ObjectivePageState extends State<ObjectivePage> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      if(nameText.text.isNotEmpty && percentText.text.isNotEmpty) {
-                        final homeworkData = {
-                          'name': nameText.text,
-                          'percent': percentText.text,
-                        };
-                        Navigator.pop(context, homeworkData);
-                      }
                     },
                     child: Text(
                       "Añadir",

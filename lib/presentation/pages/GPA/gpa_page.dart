@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:classic_gpa/presentation/widgets/gpa_card.dart';
+import 'package:classic_gpa/presentation/pages/GPA/gpa_class.dart';
+import 'package:go_router/go_router.dart';
 
 class GpaPage extends StatefulWidget {
   const GpaPage({super.key});
@@ -9,8 +11,8 @@ class GpaPage extends StatefulWidget {
 }
 
 class _GpaPageState extends State<GpaPage> {
-  List<int> years = [];
-  int nextYear = 1;
+  List<int> years = List.generate(6, (index) => index + 1);
+  int nextYear = 7;
   final ScrollController pageScroller = ScrollController();
 
   void addCard() {
@@ -43,7 +45,11 @@ class _GpaPageState extends State<GpaPage> {
               leading: Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (context.canPop()) {
+                      context.pop();
+                    }
+                  },
                   icon: const Icon(Icons.arrow_back_ios_new_rounded),
                   iconSize: 36,
                 ),
@@ -53,7 +59,7 @@ class _GpaPageState extends State<GpaPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: const [
                   Text(
-                    'GPA Calculator',
+                    'Calculadora de Notas',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                 ],
@@ -62,7 +68,9 @@ class _GpaPageState extends State<GpaPage> {
                 Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: IconButton(
-                    onPressed: addCard,
+                    onPressed: (){
+                      context.push('/gpa/class');
+                    },
                     icon: const Icon(Icons.add),
                     iconSize: 40,
                   ),
@@ -75,6 +83,7 @@ class _GpaPageState extends State<GpaPage> {
           ];
         },
         body: ListView.builder(
+          padding: EdgeInsets.only(top: 10),
           itemCount: years.length + 1,
           itemBuilder: (context, i) {
             if (i == 0) {
@@ -82,7 +91,7 @@ class _GpaPageState extends State<GpaPage> {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(18, 18, 10, 12),
+                      padding: const EdgeInsets.fromLTRB(18, 4, 10, 12),
                       child: Container(
                         height: 90,
                         decoration: BoxDecoration(
@@ -98,17 +107,17 @@ class _GpaPageState extends State<GpaPage> {
                           border: Border.all(color: Colors.green),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Column(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'General',
                               style: TextStyle(color: Colors.white, fontSize: 18),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Text(
                               '0.00',
-                              style: TextStyle(color: Colors.white, fontSize: 16),
+                              style: const TextStyle(color: Colors.white, fontSize: 16),
                             ),
                           ],
                         ),
@@ -117,7 +126,7 @@ class _GpaPageState extends State<GpaPage> {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 18, 18, 12),
+                      padding: const EdgeInsets.fromLTRB(10, 4, 18, 12),
                       child: Container(
                         height: 90,
                         decoration: BoxDecoration(

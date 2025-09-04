@@ -83,9 +83,7 @@ class _HomePlusState extends State<HomePlus> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      if(searchText.text.isNotEmpty) {
-                        Navigator.pop(context, searchText.text);
-                      }
+
                     },
                     child: Text(
                       "Añadir",

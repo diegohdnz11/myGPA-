@@ -6,7 +6,13 @@ class GpaPlusWidget extends StatefulWidget {
   final int yearNumber;
   final void Function(int yearNumber) onDelete;
 
-  const GpaPlusWidget({super.key, required this.yearNumber, required this.onDelete});
+
+  const GpaPlusWidget({
+    super.key,
+    required this.yearNumber,
+    required this.onDelete,
+
+  });
 
   @override
   State<GpaPlusWidget> createState() => _GpaPlusWidgetState();
@@ -14,14 +20,25 @@ class GpaPlusWidget extends StatefulWidget {
 
 class _GpaPlusWidgetState extends State<GpaPlusWidget> {
   bool expanded = false;
+  double gpaNUM = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    double baseValue = 0.45 - (5.0 / 9.0);
+    gpaNUM = baseValue + (widget.yearNumber - 1) * (5.0 / 9.0);
+  }
 
   @override
   Widget build(BuildContext context) {
+    double displayedGpa = gpaNUM + (5.0 / 9.0);
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: AnimatedContainer(
         width: double.infinity,
-        height: expanded ? 420 : 220,
+        height: expanded ? 620 : 220,
         duration: const Duration(milliseconds: 100),
         curve: Curves.easeInOut,
         decoration: BoxDecoration(
@@ -83,8 +100,7 @@ class _GpaPlusWidgetState extends State<GpaPlusWidget> {
                         ),
                       ),
                     ),
-
-                    if(!expanded)
+                    if (!expanded)
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 30, 30),
                         child: Container(
@@ -93,11 +109,11 @@ class _GpaPlusWidgetState extends State<GpaPlusWidget> {
                             borderRadius: BorderRadius.circular(100),
                             border: Border.all(color: Colors.grey, width: 2),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(16.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
                             child: Column(
                               children: [
-                                Text(
+                                const Text(
                                   "GPA:",
                                   style: TextStyle(
                                     fontSize: 16,
@@ -106,8 +122,8 @@ class _GpaPlusWidgetState extends State<GpaPlusWidget> {
                                   ),
                                 ),
                                 Text(
-                                  "0.00",
-                                  style: TextStyle(
+                                  displayedGpa.toStringAsFixed(2), 
+                                  style: const TextStyle(
                                     fontSize: 24,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -122,8 +138,6 @@ class _GpaPlusWidgetState extends State<GpaPlusWidget> {
                 )
               ],
             ),
-
-
             if (expanded)
               Positioned(
                 left: 16,
@@ -133,12 +147,12 @@ class _GpaPlusWidgetState extends State<GpaPlusWidget> {
                   children: [
                     SemesterCard(
                       title: 'Primer Semestre',
-                      gpa: 0.00,
+                      gpa: "0.00",
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 16),
                     SemesterCard(
                       title: 'Segundo Semestre',
-                      gpa: 0.00,
+                      gpa: "0.00", 
                     ),
                   ],
                 ),

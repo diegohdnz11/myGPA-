@@ -1,5 +1,5 @@
-import 'package:classic_gpa/presentation/pages/GPA/gpa_class.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SemesterCard extends StatelessWidget {
   const SemesterCard({ super.key,
@@ -10,7 +10,7 @@ class SemesterCard extends StatelessWidget {
   });
 
   final String title;
-  final double gpa;
+  final String gpa;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +46,54 @@ class SemesterCard extends StatelessWidget {
 
             const SizedBox(height: 16),
 
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+              child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("CURSO"),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("CREDITOS"),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("NOTA"),
+                          ),
+                        ]
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(15.0, 8.0, 8, 8.0),
+                            child: Text("diego"),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(8.0, 8.0, 15.0, 8.0),
+                            child: Text("1"),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(8.0, 8.0, 15, 8.0),
+                            child: Text("A"),
+                          ),
+                        ]
+                      ),
+                    ]
+                  ),
+
+              ),
+            ), 
             Row(
               children: [
                 Container(
@@ -67,7 +115,7 @@ class SemesterCard extends StatelessWidget {
                 const Spacer(),
                 ElevatedButton(
                   onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const GpaClass()));
+                    context.push('/gpa/class');
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 2,

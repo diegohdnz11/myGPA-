@@ -1,5 +1,3 @@
-import 'package:classic_gpa/presentation/pages/GPA/gpa_page.dart';
-import 'package:classic_gpa/presentation/pages/Home/home_insights.dart';
 import 'package:flutter/material.dart';
 
 

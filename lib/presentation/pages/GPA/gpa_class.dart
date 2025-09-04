@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Course {
   final String name;
@@ -57,7 +58,7 @@ class _GpaClassState extends State<GpaClass> {
           padding: const EdgeInsets.only(left: 10),
           child: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              context.pop();
             },
             icon: Icon(Icons.arrow_back_ios_new_rounded),
             iconSize: 36,
@@ -212,13 +213,7 @@ class _GpaClassState extends State<GpaClass> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        final String courseName = text.text ;
-                        final newCourse = Course(
-                          name: courseName,
-                          credits: selectedCredit,
-                          grade: selectedGrade,
-                        );
-                        Navigator.pop(context, newCourse);
+                        context.pop();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green[800],

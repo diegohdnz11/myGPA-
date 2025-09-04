@@ -1,16 +1,17 @@
-import 'package:classic_gpa/presentation/pages/GPA/gpa_page.dart';
-import 'package:classic_gpa/presentation/pages/Home/home_insights.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeCard extends StatefulWidget {
   final String courseName;
   final VoidCallback onDelete;
+  final String percentage;
 
   const HomeCard({
     super.key,
     required this.courseName,
     required this.onDelete,
+    required this.percentage,
   });
 
   @override
@@ -18,44 +19,8 @@ class HomeCard extends StatefulWidget {
 }
 
 class _HomeCardState extends State<HomeCard> {
-  String normalPercent = "--%";
   final TextEditingController text = TextEditingController();
 
-  Future<void> _showPercentageDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, 
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Enter Grade'),
-          content: TextField(
-            controller: text,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(hintText: "Enter number"),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel', style: TextStyle(color: Colors.black54)),
-              onPressed: () {
-                Navigator.of(context).pop();
-                text.clear();
-              },
-            ),
-            TextButton(
-              child: const Text('OK',style: TextStyle(color: Colors.black54)),
-              onPressed: () {
-                setState(() {
-                  normalPercent = "${text.text}%";
-                });
-                Navigator.of(context).pop();
-                text.clear();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   void dispose() {
@@ -69,10 +34,7 @@ class _HomeCardState extends State<HomeCard> {
       padding: const EdgeInsets.all(16.0),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomeInsights(pageTitle: widget.courseName)));
+          context.push('/insights/${Uri.encodeComponent(widget.courseName)}');
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.grey[300],
@@ -120,14 +82,14 @@ class _HomeCardState extends State<HomeCard> {
                                   isDestructiveAction: true,
                                   onPressed: () {
                                     widget.onDelete();
-                                    Navigator.pop(context);
+                                    context.pop();
                                   },
                                   child: const Text('Delete Card'),
                                 ),
                               ],
                               cancelButton: CupertinoActionSheetAction(
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  context.pop();
                                 },
                                 child: const Text('Cancel'),
                               ),
@@ -153,20 +115,7 @@ class _HomeCardState extends State<HomeCard> {
                           padding: const EdgeInsets.all(10.0),
                           child: Column(
                             children: [
-                              ElevatedButton(
-                                onPressed: _showPercentageDialog,
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.grey[200],
-                                  shape: const CircleBorder(),
-                                ),
-                                child: Text(
-                                  normalPercent,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
+                              Text(widget.percentage)
                             ],
                           ),
                         ),
